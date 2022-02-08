@@ -117,6 +117,9 @@ func Init(ctx context.Context, raw []byte, id string) (*otlptrace.Exporter, trac
 		trace.WithSpanProcessor(trace.NewBatchSpanProcessor(traceExporter)),
 	)
 
+	// TODO: remove me–this breaks embedding OPA
+	otel.SetTracerProvider(traceProvider)
+
 	options := tracing.NewOptions(
 		otelhttp.WithTracerProvider(traceProvider),
 		otelhttp.WithPropagators(propagation.TraceContext{}),
